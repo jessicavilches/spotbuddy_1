@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'user_data.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -36,7 +37,9 @@ class _LoginPageState extends State<LoginPage> {
               .signInWithEmailAndPassword(email: _email, password: _password);
           print('Signed in: ${user.uid}');
         } else {
-          FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
+          FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password).then((signedInUser) {
+            UserData().storeNewUser(signedInUser, context);
+          });
           print('Registered user: ${user.uid}');
         }
       }

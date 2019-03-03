@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
+import 'user_mgt.dart';
+//import 'package:spotbuddy_1/globals.properties';
 
 void main() => runApp(MyApp());
 
@@ -12,8 +14,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
 
         primarySwatch: Colors.purple,
+       // primarySwatch: theme_color,
       ),
-      home: new LoginPage(),
+        //home: new LoginPage(),
+        home: new MyHomePage(),
+        routes: <String, WidgetBuilder> {
+          '/homepage': (BuildContext context) => new MyHomePage()
+        }
     );
   }
 }
