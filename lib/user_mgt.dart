@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'globals.dart' as globals;
 
-void main() => runApp(new MyApp());
+void main() => runApp(new MyHomePage());
 
-class MyApp extends StatelessWidget {
+/*class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -11,14 +12,36 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+*/
 class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  State<StatefulWidget> createState() => new _MyHomePageState();
+  //@override
+  //_MyHomePageState createState() => new _MyHomePageState();
+}
+
+enum FormType {
+  edit,
+  save
 }
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   TabController tabController;
+  final formKey = new GlobalKey<FormState>();
+  FormType _formType = FormType.save;
+
+  void moveToEdit() {
+    formKey.currentState.reset();
+    setState(() {
+      _formType = FormType.edit;
+    });
+  }
+
+  void moveToSave() {
+    formKey.currentState.reset();
+    setState(() {
+      _formType = FormType.save;
+    });
+  }
 
   @override
   void initState() {
@@ -26,26 +49,207 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     tabController = new TabController(length: 5, vsync: this);
   }
 
-  @override
+  //@override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    if (_formType == FormType.save) {
+      return new Scaffold(
+          body: new Stack(
+            children: <Widget>[
+              ClipPath(
+                child: Container(color: globals.background_blue),
+                clipper: globals.getClipper(),
+              ),
+              Positioned(
+                  width: globals.screen_width,
+                  top: MediaQuery.of(context).size.height / globals.profile_scale,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          width: 100.0,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                              color: globals.theme_color,
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg'),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.all(Radius.circular(55.0)),
+                              boxShadow: [
+                                BoxShadow(blurRadius: 7.0, color: Colors.black)
+                              ])),
+                      SizedBox(height: 20.0),
+                      /*Text(
+                        'Tom Cruise',
+                        style: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat'),
+                      ),*/
 
+
+                      new TextFormField(
+                        decoration: new InputDecoration(labelText: 'First Name'),
+                        validator: (value) => value.isEmpty ? 'First name can\'t be empty' : null,
+                        //onSaved: (value) => _fname = value,
+                      ),
+
+
+                      SizedBox(height: 10.0),
+                      Text(
+                        'This is what other buddies will see',
+                        style: TextStyle(
+                            fontSize: 17.0,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: 'Montserrat'),
+                      ),
+                      SizedBox(height: 10.0),
+                      Text(
+                        'Age',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat'),
+                      ),
+                      SizedBox(height: 0.0),
+                Container(margin: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(3.0),
+                decoration: new BoxDecoration(
+                    border: new Border.all(color: globals.box_border)
+                ),
+                child: new Text("Enter Age"),
+              ),
+                      SizedBox(height: 0.0),
+                      Text(
+                        'City',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat'),
+                      ),
+                      SizedBox(height: 0.0),
+                      Container(
+                        margin: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(3.0),
+                        decoration: new BoxDecoration(
+                            border: new Border.all(color: globals.box_border)
+                        ),
+                        child: new Text("Enter City"),
+                      ),
+                      SizedBox(height: 0.0),
+                      Text(
+                        'Interests',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat'),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(3.0),
+                        decoration: new BoxDecoration(
+                            border: new Border.all(color: globals.box_border)
+                        ),
+                        child: new Text("Interest 1"),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(3.0),
+                        decoration: new BoxDecoration(
+                            border: new Border.all(color: globals.box_border)
+                        ),
+                        child: new Text("Interest 2"),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(3.0),
+                        decoration: new BoxDecoration(
+                            border: new Border.all(color: globals.box_border)
+                        ),
+                        child: new Text("Interest 3"),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(3.0),
+                        decoration: new BoxDecoration(
+                            border: new Border.all(color: globals.box_border)
+                        ),
+                        child: new Text("Interest 4"),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(3.0),
+                        decoration: new BoxDecoration(
+                            border: new Border.all(color: globals.box_border)
+                        ),
+                        child: new Text("Interest 5"),
+                      ),
+                      SizedBox(height: 25.0),
+                      Container(
+                          height: 30.0,
+                          width: 95.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: globals.box_border,
+                            color: Colors.blue,
+                            elevation: 7.0,
+                            child: GestureDetector(
+                              onTap: moveToEdit,
+                              child: Center(
+                                child: Text(
+                                  'Edit Profile',
+                                  style: TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
+                                ),
+                              ),
+                            ),
+                          ))
+                    ],
+                  ))
+            ],
+          ),
+        bottomNavigationBar: new Material(
+          color: globals.tab_color,
+          child: TabBar(
+            controller: tabController,
+            tabs: <Widget>[
+              new Tab(icon: Icon(Icons.account_box)), //see your profile
+              new Tab(icon: Icon(Icons.chat)),
+              new Tab(icon: Icon(Icons.group)), //be a buddy
+              new Tab(icon: Icon(Icons.accessibility_new)), //find a buddy
+              new Tab(icon: Icon(Icons.directions_car)) //see past trips
+            ]
+
+
+          )
+
+        ),
+        /*body: new TabBarView(
+          controller: tabController,
+          children: <Widget> [
+            MyHomePage(),
+            //In here you link your icons to the .dart pages
+
+          ]
+        )*/
+      );
+    }
+    else {
+      return new Scaffold(
         body: new Stack(
           children: <Widget>[
             ClipPath(
-              child: Container(color: Colors.lightBlue.withOpacity(0.8)),
-              clipper: getClipper(),
+              child: Container(color: globals.background_blue),
+              clipper: globals.getClipper(),
             ),
             Positioned(
-                width: 350.0,
-                top: MediaQuery.of(context).size.height / 5,
+                width: globals.screen_width,
+                top: MediaQuery.of(context).size.height / globals.profile_scale,
                 child: Column(
                   children: <Widget>[
                     Container(
                         width: 100.0,
                         height: 100.0,
                         decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: globals.theme_color,
                             image: DecorationImage(
                                 image: NetworkImage(
                                     'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg'),
@@ -62,7 +266,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Montserrat'),
                     ),
-                    SizedBox(height: 15.0),
+                    SizedBox(height: 10.0),
                     Text(
                       'This is what other buddies will see',
                       style: TextStyle(
@@ -70,42 +274,101 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                           fontStyle: FontStyle.italic,
                           fontFamily: 'Montserrat'),
                     ),
-
-
-
+                    SizedBox(height: 10.0),
+                    Text(
+                      'Age',
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat'),
+                    ),
+                    SizedBox(height: 0.0),
+                    Container(margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(3.0),
+                      decoration: new BoxDecoration(
+                          border: new Border.all(color: globals.box_border)
+                      ),
+                      child: new TextFormField(decoration: new InputDecoration(labelText: 'Enter Age'),),
+                    ),
+                    SizedBox(height: 0.0),
+                    Text(
+                      'City',
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat'),
+                    ),
+                    SizedBox(height: 0.0),
+                    Container(
+                      margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(3.0),
+                      decoration: new BoxDecoration(
+                          border: new Border.all(color: globals.box_border)
+                      ),
+                      child: new Text("Enter City"),
+                    ),
+                    SizedBox(height: 0.0),
+                    Text(
+                      'Interests',
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat'),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(3.0),
+                      decoration: new BoxDecoration(
+                          border: new Border.all(color: globals.box_border)
+                      ),
+                      child: new Text("Interest 1"),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(3.0),
+                      decoration: new BoxDecoration(
+                          border: new Border.all(color: globals.box_border)
+                      ),
+                      child: new Text("Interest 2"),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(3.0),
+                      decoration: new BoxDecoration(
+                          border: new Border.all(color: globals.box_border)
+                      ),
+                      child: new Text("Interest 3"),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(3.0),
+                      decoration: new BoxDecoration(
+                          border: new Border.all(color: globals.box_border)
+                      ),
+                      child: new Text("Interest 4"),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(3.0),
+                      decoration: new BoxDecoration(
+                          border: new Border.all(color: globals.box_border)
+                      ),
+                      child: new Text("Interest 5"),
+                    ),
                     SizedBox(height: 25.0),
                     Container(
                         height: 30.0,
                         width: 95.0,
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.greenAccent,
-                          color: Colors.green,
+                          shadowColor: globals.box_border,
+                          color: Colors.blue,
                           elevation: 7.0,
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: moveToEdit,
                             child: Center(
                               child: Text(
-                                'Edit Name',
-                                style: TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
-                              ),
-                            ),
-                          ),
-                        )),
-                    SizedBox(height: 25.0),
-                    Container(
-                        height: 30.0,
-                        width: 95.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.redAccent,
-                          color: Colors.red,
-                          elevation: 7.0,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Center(
-                              child: Text(
-                                'Log out',
+                                'Save Profile',
                                 style: TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
                               ),
                             ),
@@ -115,136 +378,35 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                 ))
           ],
         ),
-      bottomNavigationBar: new Material(
-        color: Colors.purple,
-        child: TabBar(
+        bottomNavigationBar: new Material(
+            color: globals.tab_color,
+            child: TabBar(
+                controller: tabController,
+                tabs: <Widget>[
+                  new Tab(icon: Icon(Icons.account_box)), //see your profile
+                  new Tab(icon: Icon(Icons.chat)),
+                  new Tab(icon: Icon(Icons.group)), //be a buddy
+                  new Tab(icon: Icon(Icons.accessibility_new)), //find a buddy
+                  new Tab(icon: Icon(Icons.directions_car)) //see past trips
+                ]
+
+
+            )
+
+        ),
+        /*body: new TabBarView(
           controller: tabController,
-          tabs: <Widget>[
-            new Tab(icon: Icon(Icons.account_box)), //see your profile
-            new Tab(icon: Icon(Icons.chat)),
-            new Tab(icon: Icon(Icons.group)), //be a buddy
-            new Tab(icon: Icon(Icons.accessibility_new)), //find a buddy
-            new Tab(icon: Icon(Icons.directions_car)) //see past trips
+          children: <Widget> [
+            MyHomePage(),
+            //In here you link your icons to the .dart pages
+
           ]
+        )*/
+      );
 
-
-        )
-
-      ),
-      /*body: new TabBarView(
-        controller: tabController,
-        children: <Widget> [
-          MyHomePage(),
-          //In here you link your icons to the .dart pages
-
-        ]
-      )*/
-    );
+    }
 
   }
 
-  /*@override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-        body: new Stack(
-          children: <Widget>[
-            ClipPath(
-              child: Container(color: Colors.black.withOpacity(0.8)),
-              clipper: getClipper(),
-            ),
-            Positioned(
-                width: 350.0,
-                top: MediaQuery.of(context).size.height / 5,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                        width: 150.0,
-                        height: 150.0,
-                        decoration: BoxDecoration(
-                            color: Colors.red,
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg'),
-                                fit: BoxFit.cover),
-                            borderRadius: BorderRadius.all(Radius.circular(75.0)),
-                            boxShadow: [
-                              BoxShadow(blurRadius: 7.0, color: Colors.black)
-                            ])),
-                    SizedBox(height: 90.0),
-                    Text(
-                      'Tom Cruise',
-                      style: TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat'),
-                    ),
-                    SizedBox(height: 15.0),
-                    Text(
-                      'Subscribe guys',
-                      style: TextStyle(
-                          fontSize: 17.0,
-                          fontStyle: FontStyle.italic,
-                          fontFamily: 'Montserrat'),
-                    ),
-                    SizedBox(height: 25.0),
-                    Container(
-                        height: 30.0,
-                        width: 95.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.greenAccent,
-                          color: Colors.green,
-                          elevation: 7.0,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Center(
-                              child: Text(
-                                'Edit Name',
-                                style: TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
-                              ),
-                            ),
-                          ),
-                        )),
-                    SizedBox(height: 25.0),
-                    Container(
-                        height: 30.0,
-                        width: 95.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.redAccent,
-                          color: Colors.red,
-                          elevation: 7.0,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Center(
-                              child: Text(
-                                'Log out',
-                                style: TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
-                              ),
-                            ),
-                          ),
-                        ))
-                  ],
-                ))
-          ],
-        ));
-  }*/
 }
 
-class getClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = new Path();
-
-    path.lineTo(0.0, size.height / 1.9);
-    path.lineTo(size.width + 125, 0.0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
-    return true;
-  }
-}

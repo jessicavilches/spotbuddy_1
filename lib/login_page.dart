@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'globals.dart' as globals;
 import 'user_data.dart';
 
 class LoginPage extends StatefulWidget {
@@ -36,11 +36,15 @@ class _LoginPageState extends State<LoginPage> {
           FirebaseUser user = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: _email, password: _password);
           print('Signed in: ${user.uid}');
+          globals.loggedSuccessfully = true;
         } else {
           FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password).then((signedInUser) {
             UserData().storeNewUser(signedInUser, context);
           });
           print('Registered user: ${user.uid}');
+          globals.registeredSuccessfully = true;
+
+
         }
       }
       catch (e) {
