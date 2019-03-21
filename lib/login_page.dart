@@ -37,12 +37,15 @@ class _LoginPageState extends State<LoginPage> {
               .signInWithEmailAndPassword(email: _email, password: _password);
           print('Signed in: ${user.uid}');
           globals.loggedSuccessfully = true;
+          globals.set_userID(user.uid);
+
         } else {
           FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password).then((signedInUser) {
             UserData().storeNewUser(signedInUser, context);
           });
           print('Registered user: ${user.uid}');
           globals.registeredSuccessfully = true;
+          globals.set_userID(user.uid);
 
 
         }

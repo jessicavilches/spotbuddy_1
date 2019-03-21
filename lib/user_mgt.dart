@@ -111,12 +111,16 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                             fontFamily: 'Montserrat'),
                       ),
                       SizedBox(height: 0.0),
-                Container(margin: const EdgeInsets.all(15.0),
+                Container(margin: const EdgeInsets.all(5.0),
                 padding: const EdgeInsets.all(3.0),
                 decoration: new BoxDecoration(
                     border: new Border.all(color: globals.box_border)
                 ),
-                child: new Text("Enter Age"),
+                child: new TextFormField(
+                  decoration: new InputDecoration(labelText: 'Enter your Age'),
+                  validator: (value) => value.isEmpty ? 'First name can\'t be empty' : null,
+                  //onSaved: (value) => _fname = value,
+                ),
               ),
                       SizedBox(height: 0.0),
                       Text(
