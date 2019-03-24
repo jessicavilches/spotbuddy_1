@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'globals.dart' as globals;
+import 'find_buddy.dart';
 import 'crud.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-void main() => runApp(new MyHomePage2());
+void main() => runApp(new UserMgt());
 
-class MyHomePage2 extends StatefulWidget {
+class UserMgt extends StatefulWidget {
 
-  State<StatefulWidget> createState() => new _MyHomePageState2();
+  State<StatefulWidget> createState() => new _UserMgt();
 //@override
 //_MyHomePageState createState() => new _MyHomePageState();
 }
@@ -17,14 +18,7 @@ enum FormType {
   save
 }
 
-class _MyHomePageState2 extends State<MyHomePage2> with SingleTickerProviderStateMixin {
-  TabController tabController;// = new TabController(length: 5, vsync: this);
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = new TabController(length: 5, vsync: this);
-  }
+class _UserMgt extends State<UserMgt>  {
   final formKey = new GlobalKey<FormState>();
   String _fullName;
   String _age;
@@ -38,10 +32,14 @@ class _MyHomePageState2 extends State<MyHomePage2> with SingleTickerProviderStat
   FormType _formType = FormType.edit;
   crudMethods crudObj = new crudMethods();
 
-
+  void getInterest1() async {
+    await crudObj.getInterest1(globals.get_userID());
+  }
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       //color: globals.tab_color,
       appBar: AppBar(
@@ -56,22 +54,6 @@ class _MyHomePageState2 extends State<MyHomePage2> with SingleTickerProviderStat
           ),
         ),
       ),
-      bottomNavigationBar: new Material(
-          color: globals.tab_color,
-          child: TabBar(
-              controller: tabController,
-              tabs: <Widget>[
-                new Tab(icon: Icon(Icons.account_box)), //see your profile
-                new Tab(icon: Icon(Icons.chat)),
-                new Tab(icon: Icon(Icons.group)), //be a buddy
-                new Tab(icon: Icon(Icons.accessibility_new)), //find a buddy
-                new Tab(icon: Icon(Icons.directions_car)) //see past trips
-              ]
-
-
-          )
-
-      ),
     );
   }
 
@@ -81,7 +63,7 @@ class _MyHomePageState2 extends State<MyHomePage2> with SingleTickerProviderStat
       new RaisedButton(
         child: new Text('Save', style: new TextStyle(fontSize: 20.0)),
          onPressed: validateAndSubmit,
-      )
+      ),
     ];
   }
 
@@ -95,58 +77,59 @@ class _MyHomePageState2 extends State<MyHomePage2> with SingleTickerProviderStat
   }
 
   Future<void> validateAndSubmit() async {
-      //form.save();
-      //make sure to set_userID in the registration form
       if (validateAndSave()) {
-       // String userId = await widget.auth.signInWithEmailAndPassword(_email, _password);
-        //FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-        //String userID = user.uid;
         addToDatabase();
       }
   }
 
-List<Widget> buildInputs(){
-  // else if (_formType == FormType.register){
+List<Widget> buildInputs() {
     final _myPassController = TextEditingController();
     //this._mode = globals.currentItemSelected;
     return [
       new TextFormField(
+          initialValue: globals.eName,
         decoration: new InputDecoration(labelText: 'Full Name'),
         validator: (value) => value.isEmpty ? 'First name can\'t be empty' : null,
         onSaved: (value) => _fullName = value,
       ),
       new TextFormField(
-        initialValue: "Matt",
+        initialValue: globals.eAge,
         decoration: new InputDecoration(labelText: 'Age'),
         validator: (value) => value.isEmpty ? 'Age can\'t be empty' : null,
         onSaved: (value) => _age = value,
       ),
       new TextFormField(
+        initialValue: globals.eCity,
         decoration: new InputDecoration(labelText: 'City'),
         validator: (value) => value.isEmpty ? 'City can\'t be empty' : null,
         onSaved: (value) => _city = value,
       ),
       new TextFormField(
+        initialValue: globals.eInterest1,
         decoration: new InputDecoration(labelText: 'Interest 1'),
         validator: (value) => value.isEmpty ? 'Interest can\'t be empty' : null,
         onSaved: (value) => _interest1 = value,
       ),
       new TextFormField(
+        initialValue: globals.eInterest2,
         decoration: new InputDecoration(labelText: 'Interest 2'),
         validator: (value) => value.isEmpty ? 'Interest can\'t be empty' : null,
         onSaved: (value) => _interest2 = value,
       ),
       new TextFormField(
+        initialValue: globals.eInterest3,
         decoration: new InputDecoration(labelText: 'Interest 3'),
         validator: (value) => value.isEmpty ? 'Interest can\'t be empty' : null,
         onSaved: (value) => _interest3 = value,
       ),
       new TextFormField(
+        initialValue: globals.eInterest4,
         decoration: new InputDecoration(labelText: 'Interest 4'),
         validator: (value) => value.isEmpty ? 'Interest can\'t be empty' : null,
         onSaved: (value) => _interest4 = value,
       ),
       new TextFormField(
+        initialValue: globals.eInterest5,
         decoration: new InputDecoration(labelText: 'Interest 5'),
         validator: (value) => value.isEmpty ? 'Interest can\'t be empty' : null,
         onSaved: (value) => _interest5 = value,
@@ -155,7 +138,8 @@ List<Widget> buildInputs(){
   }
 
   void addToDatabase() async {
-    if(globals.registeredSuccessfully == true) {
+    print(this._interest2);
+    if(globals.loggedSuccessfully == true) {
       Map <String, dynamic> userData = {
         'fullName': this._fullName,
         'city': this._city,
@@ -167,6 +151,7 @@ List<Widget> buildInputs(){
         'interest5': this._interest5,
         'uid' : globals.get_userID()
       };
+      print("updated successfully");
       crudObj.addData(userData).catchError((e) {
         print(e);
       });

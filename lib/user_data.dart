@@ -6,7 +6,7 @@ class UserData {
 
 
   storeNewUser(user, context) {
-    Firestore.instance.collection('/users').add({
+    Firestore.instance.collection('Users').add({
       'email': user.email,
       'uid': user.uid,
       'fullname': "Enter Name",

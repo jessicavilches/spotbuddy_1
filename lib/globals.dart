@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'crud.dart';
 
 var theme_color = Colors.blue;
 var tab_color = Colors.blueGrey;
@@ -6,13 +7,49 @@ var profile_scale = 10;
 var screen_width = 400.0;
 var background_blue = Colors.lightBlue.withOpacity(0.2);
 var box_border = Colors.blueAccent;
-bool registeredSuccessfully = true;
-bool loggedSuccessfully = true;
-String _userID = "123";
+String eAge = "";
+String eName = "";
+String eCity = "";
+String eInterest1 = "";
+String eInterest2 = "";
+String eInterest3 = "";
+String eInterest4 = "";
+String eInterest5 = "";
+
+bool registeredSuccessfully;
+bool loggedSuccessfully;
+String _userID = "";
+
+crudMethods crudObj = new crudMethods();
+
+void getAge() async {
+  await crudObj.getAge(get_userID());
+}
+void getCity() async {
+  await crudObj.getCity(get_userID());
+}
+void getName() async {
+  await crudObj.getName(get_userID());
+}
+void getInterest1() async {
+  await crudObj.getInterest1(get_userID());
+}
+void getInterest2() async {
+  await crudObj.getInterest2(get_userID());
+}
+void getInterest3() async {
+  await crudObj.getInterest3(get_userID());
+}
+void getInterest4() async {
+  await crudObj.getInterest4(get_userID());
+}
+void getInterest5() async {
+  await crudObj.getInterest5(get_userID());
+}
 
 
-void set_userID(String uid)
-{
+
+void set_userID(String uid) {
   _userID = uid;
 }
 

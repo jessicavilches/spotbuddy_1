@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'globals.dart' as globals;
 import 'user_data.dart';
+import 'auth.dart';
+import 'crud.dart';
 
 class LoginPage extends StatefulWidget {
+  LoginPage({this.auth, this.onSignedIn});
+  final BaseAuth auth;
+  final VoidCallback onSignedIn;
 
   @override
   State<StatefulWidget> createState() => new _LoginPageState();
@@ -29,6 +34,34 @@ class _LoginPageState extends State<LoginPage> {
     return false;
   }
 
+  crudMethods crudObj = new crudMethods();
+
+  void getAge() async {
+    await crudObj.getAge(globals.get_userID());
+  }
+  void getCity() async {
+    await crudObj.getCity(globals.get_userID());
+  }
+  void getName() async {
+    await crudObj.getName(globals.get_userID());
+  }
+  void getInterest1() async {
+    await crudObj.getInterest1(globals.get_userID());
+  }
+  void getInterest2() async {
+    await crudObj.getInterest2(globals.get_userID());
+  }
+  void getInterest3() async {
+    await crudObj.getInterest3(globals.get_userID());
+  }
+  void getInterest4() async {
+    await crudObj.getInterest4(globals.get_userID());
+  }
+  void getInterest5() async {
+    await crudObj.getInterest5(globals.get_userID());
+  }
+
+
   void validateAndSubmit() async {
     if (validateAndSave()) {
       try {
@@ -38,15 +71,28 @@ class _LoginPageState extends State<LoginPage> {
           print('Signed in: ${user.uid}');
           globals.loggedSuccessfully = true;
           globals.set_userID(user.uid);
-
+          await getAge();
+          await getCity();
+          await getName();
+          await getInterest1();
+          await getInterest2();
+          await getInterest3();
+          await getInterest4();
+          await getInterest5();
+          print("At log in, the age is: ");
+          print(globals.eAge);
+          //Navigator.of(context).pop();
+          Navigator.of(context).pushReplacementNamed('/homepage');
         } else {
-          FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password).then((signedInUser) {
-            UserData().storeNewUser(signedInUser, context);
-          });
-          print('Registered user: ${user.uid}');
+          print('did i get here');
+         // FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password).then((signedInUser) {
+          //  UserData().storeNewUser(signedInUser, context);
+          //});
+          FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
           globals.registeredSuccessfully = true;
           globals.set_userID(user.uid);
-
+          print('Registered user: ${user.uid}');
+          Navigator.of(context).pushReplacementNamed('/homepage');
 
         }
       }
