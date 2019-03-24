@@ -45,7 +45,10 @@ class FireMapState extends State<FireMap> {
   Firestore firestore = Firestore.instance;
   Geoflutterfire geo = Geoflutterfire();
 
-  //final Set<Marker> _markers;
+  final Set<Marker> _markers = Set();
+
+  //final Marker one = new Marker()
+
   void _onCameraMove(CameraPosition position) {
     _lastMapPosition = position.target;
   }
@@ -59,7 +62,7 @@ class FireMapState extends State<FireMap> {
               myLocationEnabled: true, // Add little blue dot for device location, requires permission from user
               mapType: MapType.normal,
               onCameraMove: _onCameraMove,
-              //markers: _markers,
+              markers: _markers,
 //              trackCameraPosition: true
           ),
           Positioned(
@@ -79,7 +82,7 @@ class FireMapState extends State<FireMap> {
               FlatButton(
                   child: Icon(Icons.pin_drop),
                   color: Colors.purple,
-                  onPressed: () => _animateToUser(),
+                  onPressed: () => _onAddMarkerButtonPressed(),
                   )
           )
         ]
@@ -110,17 +113,30 @@ class FireMapState extends State<FireMap> {
     });
   }
 
-  /*
-  void _addMarker() {
-   var markerIdVal = MyWay
-    var marker = Marker(
-        position: mapController.CameraPosition.target,
+  void _onAddMarkerButtonPressed() {
+    _markers.clear();
+    setState(() {
+      _markers.add(Marker(
+        markerId: MarkerId(_lastMapPosition.toString()),
+        position: _lastMapPosition,
+        infoWindow: InfoWindow(
+          title: _lastMapPosition.longitude.toString(),
+          snippet: _lastMapPosition.latitude.toString(),
+        ),
         icon: BitmapDescriptor.defaultMarker,
-       // infoWindowText: InfoWindowText('Magic Marker', '🍄🍄🍄')
-    );
+      ));
+    });
+    print("this is the pin longitude: ");
+    print(_lastMapPosition.longitude);
+  }
 
-    mapController.
-  }*/
+
+  void checkDistance(double lat, double longit) async {
+    CollectionReference f = Firestore.instance.collection("locations");
+    Stream<QuerySnapshot> docs;// =  f.snapshots();
+    docs = f.where("latitude", isLessThanOrEqualTo: _lastMapPosition.latitude-1).snapshots();
+
+  }
 
   void _onMapCreated(GoogleMapController controller) {
     setState(() {

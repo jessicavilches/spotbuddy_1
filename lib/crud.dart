@@ -23,6 +23,7 @@ class crudMethods {
 
 
 
+
   Future<void> getName(String uId) async {
     DocumentSnapshot document = await Firestore.instance.collection("Users").document(uId).get();
     globals.eName = document.data['fullName'];
