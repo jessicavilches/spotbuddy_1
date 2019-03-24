@@ -85,13 +85,14 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.of(context).pushReplacementNamed('/homepage');
         } else {
           print('did i get here');
-         // FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password).then((signedInUser) {
-          //  UserData().storeNewUser(signedInUser, context);
-          //});
-          FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
+         //FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password).then((signedInUser) {UserData().storeNewUser(signedInUser, context);
+         //});
+         FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
           globals.registeredSuccessfully = true;
+          globals.loggedSuccessfully = true;
           globals.set_userID(user.uid);
           print('Registered user: ${user.uid}');
+          UserData().storeNewUser(user, context);
           Navigator.of(context).pushReplacementNamed('/homepage');
 
         }

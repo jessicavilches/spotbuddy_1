@@ -3,7 +3,6 @@ import 'login_page.dart';
 import 'user_mgt2.dart';
 //import 'package:spotbuddy_1/globals.properties';
 import 'globals.dart' as globals;
-import 'find_buddy.dart';
 import 'home.dart';
 
 void main() => runApp(MyApp());

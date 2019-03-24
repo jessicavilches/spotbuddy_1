@@ -24,13 +24,31 @@ class FireMap extends StatefulWidget {
 }
 
 
+
 class FireMapState extends State<FireMap> {
+  //static String one = 'myID';
+  //final Marker _marker = new Marker(markerId: one);
+
+
+
+
+
+  //Map<MarkerId, Marker> markers = <MarkerId, Marker> {};
+
   GoogleMapController mapController;
+
+
+  MarkerId selectedMarker;
+
+  LatLng _lastMapPosition = LatLng(24.150, -110.32);
   Location location = new Location();
   Firestore firestore = Firestore.instance;
   Geoflutterfire geo = Geoflutterfire();
 
   //final Set<Marker> _markers;
+  void _onCameraMove(CameraPosition position) {
+    _lastMapPosition = position.target;
+  }
 
   build(context) {
     return Stack(
@@ -39,7 +57,8 @@ class FireMapState extends State<FireMap> {
               initialCameraPosition: CameraPosition(target: LatLng(24.150, -110.32), zoom: 10),
               onMapCreated: _onMapCreated,
               myLocationEnabled: true, // Add little blue dot for device location, requires permission from user
-              mapType: MapType.normal
+              mapType: MapType.normal,
+              onCameraMove: _onCameraMove,
               //markers: _markers,
 //              trackCameraPosition: true
           ),
@@ -52,6 +71,16 @@ class FireMapState extends State<FireMap> {
                   color: Colors.green,
                   onPressed: () => _animateToUser(),
               )
+          ),
+          Positioned(
+            bottom:20,
+            right:5,
+            child:
+              FlatButton(
+                  child: Icon(Icons.pin_drop),
+                  color: Colors.purple,
+                  onPressed: () => _animateToUser(),
+                  )
           )
         ]
     );
@@ -80,8 +109,10 @@ class FireMapState extends State<FireMap> {
       'name': 'Yay I can be queried!'
     });
   }
-  /*_addMarker() {
-   // var marker_1 = Marker
+
+  /*
+  void _addMarker() {
+   var markerIdVal = MyWay
     var marker = Marker(
         position: mapController.CameraPosition.target,
         icon: BitmapDescriptor.defaultMarker,

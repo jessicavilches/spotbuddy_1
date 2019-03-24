@@ -8,7 +8,7 @@ class UserData {
   storeNewUser(user, context) {
     Firestore.instance.collection('Users').add({
       'email': user.email,
-      'uid': user.uid,
+      'uid': "",
       'fullname': "Enter Name",
       'age': "Enter Age",
       'city': " Enter City",
@@ -18,8 +18,8 @@ class UserData {
       'interest4': "Enter interest 4",
       'interest5': "Enter interest 5",
     }).then((value) {
-      Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed('/homepage');
+      //Navigator.of(context).pop();
+      //Navigator.of(context).pushReplacementNamed('/homepage');
     }).catchError((e) {
       print(e);
     });
