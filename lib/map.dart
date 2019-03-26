@@ -164,58 +164,59 @@ class FireMapState extends State<FireMap> {
 
   }*/
 
-  bool similarInterest(DocumentSnapshot document) {
+  String similarInterest(DocumentSnapshot document) {
+    String str = "";
     if(globals.eInterest1 == document.data['i1'])
-
+      str += document.data['i1'].tostring() + ", ";
     if(globals.eInterest1 == document.data['i2'])
-
+      str += document.data['i2'].tostring() + ", ";
     if(globals.eInterest1 == document.data['i3'])
-
+      str += document.data['i3'].tostring() + ", ";
     if(globals.eInterest1 == document.data['i4'])
-
+      str += document.data['i4'].tostring() + ", ";
     if(globals.eInterest1 == document.data['i5'])
-
+      str += document.data['i5'].tostring() + ", ";
     if(globals.eInterest2 == document.data['i1'])
-
+      str += document.data['i1'].tostring() + ", ";
     if(globals.eInterest2 == document.data['i2'])
-
+      str += document.data['i2'].tostring() + ", ";
     if(globals.eInterest2 == document.data['i3'])
-
+      str += document.data['i3'].tostring() + ", ";
     if(globals.eInterest2 == document.data['i4'])
-
+      str += document.data['i4'].tostring() + ", ";
     if(globals.eInterest2 == document.data['i5'])
-
+      str += document.data['i5'].tostring() + ", ";
     if(globals.eInterest3 == document.data['i1'])
-
+      str += document.data['i1'].tostring() + ", ";
     if(globals.eInterest3 == document.data['i2'])
-
+      str += document.data['i2'].tostring() + ", ";
     if(globals.eInterest3 == document.data['i3'])
-
+      str += document.data['i3'].tostring() + ", ";
     if(globals.eInterest3 == document.data['i4'])
-
+      str += document.data['i4'].tostring() + ", ";
     if(globals.eInterest3 == document.data['i5'])
-
+      str += document.data['i5'].tostring() + ", ";
     if(globals.eInterest4 == document.data['i1'])
-
+      str += document.data['i1'].tostring() + ", ";
     if(globals.eInterest4 == document.data['i2'])
-
+      str += document.data['i2'].tostring() + ", ";
     if(globals.eInterest4 == document.data['i3'])
-
+      str += document.data['i3'].tostring() + ", ";
     if(globals.eInterest4 == document.data['i4'])
-
+      str += document.data['i4'].tostring() + ", ";
     if(globals.eInterest4 == document.data['i5'])
-
+      str += document.data['i5'].tostring() + ", ";
     if(globals.eInterest5 == document.data['i1'])
-
+      str += document.data['i1'].tostring() + ", ";
     if(globals.eInterest5 == document.data['i2'])
-
+      str += document.data['i2'].tostring() + ", ";
     if(globals.eInterest5 == document.data['i3'])
-
+      str += document.data['i3'].tostring() + ", ";
     if(globals.eInterest5 == document.data['i4'])
-
+      str += document.data['i4'].tostring() + ", ";
     if(globals.eInterest5 == document.data['i5'])
-
-    return false;
+      str += document.data['i5'].tostring() + ", ";
+    return str;
   }
 
 
@@ -259,7 +260,7 @@ class FireMapState extends State<FireMap> {
       documentList.forEach((DocumentSnapshot document) {
         GeoPoint pos = document.data['position']['geopoint'];
         double distance = document.data['distance'];
-        if(similarInterest(document) == true) {
+        if(similarInterest(document) != "") {
           _mark.add(Marker(
             //markerId: MarkerId(_lastMapPosition.toString()),
             markerId: MarkerId(
