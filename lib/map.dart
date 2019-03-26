@@ -266,8 +266,8 @@ class FireMapState extends State<FireMap> {
                 pos.latitude.toString() + pos.longitude.toString()),
             position: LatLng(pos.latitude, pos.longitude),
             infoWindow: InfoWindow(
-              title: _lastMapPosition.longitude.toString(),
-              snippet: _lastMapPosition.latitude.toString(),
+              title: document.data['name'], //_lastMapPosition.longitude.toString(),
+              snippet: document.data['i1'], //_lastMapPosition.latitude.toString(),
             ),
             icon: BitmapDescriptor.defaultMarkerWithHue(
                 BitmapDescriptor.hueViolet), //BitmapDescriptor.defaultMarker,
