@@ -132,15 +132,7 @@ class _HomePageState extends State<HomePage>{
             ),
             title: Text('Inbox'),
           ),
-          BottomNavigationBarItem(
-            icon: new IconButton(
-                icon: new Icon(Icons.group),
-                iconSize: 40,
-                onPressed: null
-            ),
-            title: Text('Become Buddy'),
 
-          ),
           BottomNavigationBarItem(
             icon: new IconButton(
                 icon: new Icon(Icons.accessibility_new),

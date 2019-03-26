@@ -7,6 +7,10 @@ var profile_scale = 10;
 var screen_width = 400.0;
 var background_blue = Colors.lightBlue.withOpacity(0.2);
 var box_border = Colors.blueAccent;
+
+var UserModes = ['Be a Buddy', 'Not be a buddy'];
+var currentItemSelected = UserModes[0];
+
 String eAge = "";
 String eName = "";
 String eCity = "";

@@ -68,8 +68,8 @@ class FireMapState extends State<FireMap> {
             myLocationEnabled: true, // Add little blue dot for device location, requires permission from user
             mapType: MapType.normal,
             onCameraMove: _onCameraMove,
-            //markers: _markers,
-            markers: _mark,
+            markers: _markers,
+            //markers: _mark,
 //              trackCameraPosition: true
           ),
           Positioned(
@@ -107,6 +107,14 @@ class FireMapState extends State<FireMap> {
   }
 
   _animateToUser() async {
+    await globals.getInterest1();
+    await globals.getInterest2();
+    await globals.getInterest5();
+    await globals.getInterest3();
+    await globals.getInterest4();
+    await globals.getAge();
+    await globals.getCity();
+    await globals.getName();
     var pos = await location.getLocation();
     print(pos.longitude);
     print('\n');
@@ -118,7 +126,7 @@ class FireMapState extends State<FireMap> {
         )
     )
     );
-    _addGeoPoint();
+    await _addGeoPoint();
   }
 
   Future<void> _addGeoPoint() async {
