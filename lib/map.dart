@@ -165,55 +165,55 @@ class FireMapState extends State<FireMap> {
   }*/
 
   bool similarInterest(DocumentSnapshot document) {
-    if(globals.eInterest1 = document.data['i1'])
+    if(globals.eInterest1 == document.data['i1'])
       return true;
-    if(globals.eInterest1 = document.data['i2'])
+    if(globals.eInterest1 == document.data['i2'])
       return true;
-    if(globals.eInterest1 = document.data['i3'])
+    if(globals.eInterest1 == document.data['i3'])
       return true;
-    if(globals.eInterest1 = document.data['i4'])
+    if(globals.eInterest1 == document.data['i4'])
       return true;
-    if(globals.eInterest1 = document.data['i5'])
+    if(globals.eInterest1 == document.data['i5'])
       return true;
-    if(globals.eInterest2 = document.data['i1'])
+    if(globals.eInterest2 == document.data['i1'])
       return true;
-    if(globals.eInterest2 = document.data['i2'])
+    if(globals.eInterest2 == document.data['i2'])
       return true;
-    if(globals.eInterest2 = document.data['i3'])
+    if(globals.eInterest2 == document.data['i3'])
       return true;
-    if(globals.eInterest2 = document.data['i4'])
+    if(globals.eInterest2 == document.data['i4'])
       return true;
-    if(globals.eInterest2 = document.data['i5'])
+    if(globals.eInterest2 == document.data['i5'])
       return true;
-    if(globals.eInterest3 = document.data['i1'])
+    if(globals.eInterest3 == document.data['i1'])
       return true;
-    if(globals.eInterest3 = document.data['i2'])
+    if(globals.eInterest3 == document.data['i2'])
       return true;
-    if(globals.eInterest3 = document.data['i3'])
+    if(globals.eInterest3 == document.data['i3'])
       return true;
-    if(globals.eInterest3 = document.data['i4'])
+    if(globals.eInterest3 == document.data['i4'])
       return true;
-    if(globals.eInterest3 = document.data['i5'])
+    if(globals.eInterest3 == document.data['i5'])
       return true;
-    if(globals.eInterest4 = document.data['i1'])
+    if(globals.eInterest4 == document.data['i1'])
       return true;
-    if(globals.eInterest4 = document.data['i2'])
+    if(globals.eInterest4 == document.data['i2'])
       return true;
-    if(globals.eInterest4 = document.data['i3'])
+    if(globals.eInterest4 == document.data['i3'])
       return true;
-    if(globals.eInterest4 = document.data['i4'])
+    if(globals.eInterest4 == document.data['i4'])
       return true;
-    if(globals.eInterest4 = document.data['i5'])
+    if(globals.eInterest4 == document.data['i5'])
       return true;
-    if(globals.eInterest5 = document.data['i1'])
+    if(globals.eInterest5 == document.data['i1'])
       return true;
-    if(globals.eInterest5 = document.data['i2'])
+    if(globals.eInterest5 == document.data['i2'])
       return true;
-    if(globals.eInterest5 = document.data['i3'])
+    if(globals.eInterest5 == document.data['i3'])
       return true;
-    if(globals.eInterest5 = document.data['i4'])
+    if(globals.eInterest5 == document.data['i4'])
       return true;
-    if(globals.eInterest5 = document.data['i5'])
+    if(globals.eInterest5 == document.data['i5'])
       return true;
     return false;
   }
@@ -259,16 +259,20 @@ class FireMapState extends State<FireMap> {
       documentList.forEach((DocumentSnapshot document) {
         GeoPoint pos = document.data['position']['geopoint'];
         double distance = document.data['distance'];
-        _mark.add(Marker(
-          //markerId: MarkerId(_lastMapPosition.toString()),
-          markerId: MarkerId(pos.latitude.toString() + pos.longitude.toString()),
-          position: LatLng(pos.latitude, pos.longitude),
-          infoWindow: InfoWindow(
-            title: _lastMapPosition.longitude.toString(),
-            snippet: _lastMapPosition.latitude.toString(),
-          ),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet), //BitmapDescriptor.defaultMarker,
-        ));
+        if(similarInterest(document) == true) {
+          _mark.add(Marker(
+            //markerId: MarkerId(_lastMapPosition.toString()),
+            markerId: MarkerId(
+                pos.latitude.toString() + pos.longitude.toString()),
+            position: LatLng(pos.latitude, pos.longitude),
+            infoWindow: InfoWindow(
+              title: _lastMapPosition.longitude.toString(),
+              snippet: _lastMapPosition.latitude.toString(),
+            ),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueViolet), //BitmapDescriptor.defaultMarker,
+          ));
+        }
         print("this is the document id");
         print(document.documentID);
         print("This is the latitude of the db point");
