@@ -124,7 +124,12 @@ class FireMapState extends State<FireMap> {
     GeoFirePoint point = geo.point(latitude: pos.latitude, longitude: pos.longitude);
     return firestore.collection('locations').document(globals.get_userID()).setData({
       'position': point.data,
-      'name': 'Yay I can be queried!'
+      'name': globals.eName,
+      'i1': globals.eInterest1,
+      'i2': globals.eInterest2,
+      'i3' : globals.eInterest3,
+      'i4' : globals.eInterest4,
+      'i5' : globals.eInterest5,
     });
   }
 
@@ -201,7 +206,8 @@ class FireMapState extends State<FireMap> {
         GeoPoint pos = document.data['position']['geopoint'];
         double distance = document.data['distance'];
         _mark.add(Marker(
-          markerId: MarkerId(_lastMapPosition.toString()),
+          //markerId: MarkerId(_lastMapPosition.toString()),
+          markerId: MarkerId(pos.latitude.toString() + pos.longitude.toString()),
           position: LatLng(pos.latitude, pos.longitude),
           infoWindow: InfoWindow(
             title: _lastMapPosition.longitude.toString(),
@@ -212,7 +218,7 @@ class FireMapState extends State<FireMap> {
         print("this is the document id");
         print(document.documentID);
         print("This is the latitude of the db point");
-        print(_lastMapPosition.latitude.toString());
+        print(pos.latitude.toString());
       });
     });
 
