@@ -5,6 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'globals.dart' as globals;
 
+import 'package:rxdart/rxdart.dart';
+import 'dart:async';
+
 void main() => runApp(Map());
 
 class Map extends StatelessWidget {
@@ -46,6 +49,7 @@ class FireMapState extends State<FireMap> {
   Geoflutterfire geo = Geoflutterfire();
 
   final Set<Marker> _markers = Set();
+  final Set<Marker> _mark = Set();
 
   //final Marker one = new Marker()
 
@@ -57,33 +61,44 @@ class FireMapState extends State<FireMap> {
     return Stack(
         children: [
           GoogleMap(
-              initialCameraPosition: CameraPosition(target: LatLng(24.150, -110.32), zoom: 10),
-              onMapCreated: _onMapCreated,
-              myLocationEnabled: true, // Add little blue dot for device location, requires permission from user
-              mapType: MapType.normal,
-              onCameraMove: _onCameraMove,
-              markers: _markers,
+            initialCameraPosition: CameraPosition(target: LatLng(24.150, -110.32), zoom: 10),
+            onMapCreated: _onMapCreated,
+            myLocationEnabled: true, // Add little blue dot for device location, requires permission from user
+            mapType: MapType.normal,
+            onCameraMove: _onCameraMove,
+            //markers: _markers,
+            markers: _mark,
 //              trackCameraPosition: true
           ),
           Positioned(
               bottom: 50,
-              right: 10,
+              right: 5,
               child:
               FlatButton(
-                  child: Icon(Icons.pin_drop),
-                  color: Colors.green,
-                  onPressed: () => _animateToUser(),
+                child: Icon(Icons.pin_drop),
+                color: Colors.green,
+                onPressed: () => _animateToUser(),
               )
           ),
           Positioned(
-            bottom:20,
-            right:5,
-            child:
+              bottom:10,
+              right:5,
+              child:
               FlatButton(
-                  child: Icon(Icons.pin_drop),
-                  color: Colors.purple,
-                  onPressed: () => _onAddMarkerButtonPressed(),
-                  )
+                child: Icon(Icons.pin_drop),
+                color: Colors.purple,
+                onPressed: () => _onAddMarkerButtonPressed(),
+              )
+          ),
+          Positioned(
+            bottom: 100,
+            right: 5,
+            child:
+            FlatButton(
+              child: Icon(Icons.pin_drop),
+              color: Colors.orange,
+              onPressed: () => _startQuery(),
+            )
           )
         ]
     );
@@ -114,7 +129,7 @@ class FireMapState extends State<FireMap> {
   }
 
   void _onAddMarkerButtonPressed() {
-    _markers.clear();
+    //_markers.clear();
     setState(() {
       _markers.add(Marker(
         markerId: MarkerId(_lastMapPosition.toString()),
@@ -128,19 +143,117 @@ class FireMapState extends State<FireMap> {
     });
     print("this is the pin longitude: ");
     print(_lastMapPosition.longitude);
+    print("this is the pin latitude: ");
+    print(_lastMapPosition.latitude);
+    _startQuery();
   }
 
 
-  void checkDistance(double lat, double longit) async {
+  /*void checkDistance(double lat, double longit) async {
     CollectionReference f = Firestore.instance.collection("locations");
     Stream<QuerySnapshot> docs;// =  f.snapshots();
-    docs = f.where("latitude", isLessThanOrEqualTo: _lastMapPosition.latitude-1).snapshots();
+    //docs = f.where("latitude", isLessThanOrEqualTo: _lastMapPosition.latitude+1).snapshots();
+    docs = f.where("latitude", isLessThanOrEqualTo: ).snapshots();
+
+  }*/
+
+
+
+
+  // Stateful Data
+  BehaviorSubject<double> radius = BehaviorSubject(seedValue: 30.0);//seedValue: 100.0);
+  Stream<dynamic> query;
+
+  // Subscription
+  StreamSubscription subscription;
+
+  /*_addMarker() {
+    var marker = MarkerOptions(
+        position: mapController.cameraPosition.target,
+        icon: BitmapDescriptor.defaultMarker,
+        infoWindowText: InfoWindowText('Magic Marker', '🍄🍄🍄')
+    );
+
+    mapController.addMarker(marker);
+  }*/
+
+  void _updateMarkers(List<DocumentSnapshot> documentList) {
+    print(documentList);
+    //mapController.clearMarkers();
+    /*mapController.markers.forEach((marker){
+      mapController.removeMarker(marker);
+    });
+    documentList.forEach((DocumentSnapshot document) {
+      GeoPoint pos = document.data['position']['geopoint'];
+      double distance = document.data['distance'];
+      var marker = MarkerOptions(
+          position: LatLng(pos.latitude, pos.longitude),
+          icon: BitmapDescriptor.defaultMarker,
+          infoWindowText: InfoWindowText('Magic Marker', '$distance kilometers from query center')
+      );
+
+
+      mapController.addMarker(marker);
+    });*/
+    //_mark.clear();
+    setState(() {
+      documentList.forEach((DocumentSnapshot document) {
+        GeoPoint pos = document.data['position']['geopoint'];
+        double distance = document.data['distance'];
+        _mark.add(Marker(
+          markerId: MarkerId(_lastMapPosition.toString()),
+          position: LatLng(pos.latitude, pos.longitude),
+          infoWindow: InfoWindow(
+            title: _lastMapPosition.longitude.toString(),
+            snippet: _lastMapPosition.latitude.toString(),
+          ),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet), //BitmapDescriptor.defaultMarker,
+        ));
+        print("this is the document id");
+        print(document.documentID);
+        print("This is the latitude of the db point");
+        print(_lastMapPosition.latitude.toString());
+      });
+    });
 
   }
+
+  _startQuery() async {
+    // Get users location
+    var pos = await location.getLocation();
+    double lat = pos.latitude; //pos['latitude'];
+    double lng = pos.longitude; //pos['longitude'];
+
+
+    // Make a referece to firestore
+    var ref = firestore.collection('locations');
+    GeoFirePoint center = geo.point(latitude: lat, longitude: lng);
+
+    // subscribe to query
+    subscription = radius.switchMap((rad) {
+      return geo.collection(collectionRef: ref).within(
+          center: center,
+          radius: rad,
+          field: 'position',
+          strictMode: true
+      );
+    }).listen(_updateMarkers);
+  }
+
+  _updateQuery(value) {
+    setState(() {
+      radius.add(value);
+    });
+  }
+
+
+
+
 
   void _onMapCreated(GoogleMapController controller) {
     setState(() {
       mapController = controller;
     });
+    _updateQuery(25.0);
   }
 }
