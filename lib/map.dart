@@ -172,58 +172,59 @@ class FireMapState extends State<FireMap> {
 
   }*/
 
-  bool similarInterest(DocumentSnapshot document) {
+  String similarInterest(DocumentSnapshot document) {
+    String str = "";
     if(globals.eInterest1 == document.data['i1'])
-      return true;
+      str += document.data['i1'] + ", ";
     if(globals.eInterest1 == document.data['i2'])
-      return true;
+      str += document.data['i2'] + ", ";
     if(globals.eInterest1 == document.data['i3'])
-      return true;
+      str += document.data['i3'] + ", ";
     if(globals.eInterest1 == document.data['i4'])
-      return true;
+      str += document.data['i4'] + ", ";
     if(globals.eInterest1 == document.data['i5'])
-      return true;
+      str += document.data['i5'] + ", ";
     if(globals.eInterest2 == document.data['i1'])
-      return true;
+      str += document.data['i1'] + ", ";
     if(globals.eInterest2 == document.data['i2'])
-      return true;
+      str += document.data['i2'] + ", ";
     if(globals.eInterest2 == document.data['i3'])
-      return true;
+      str += document.data['i3'] + ", ";
     if(globals.eInterest2 == document.data['i4'])
-      return true;
+      str += document.data['i4'] + ", ";
     if(globals.eInterest2 == document.data['i5'])
-      return true;
+      str += document.data['i5'] + ", ";
     if(globals.eInterest3 == document.data['i1'])
-      return true;
+      str += document.data['i1'] + ", ";
     if(globals.eInterest3 == document.data['i2'])
-      return true;
+      str += document.data['i2'] + ", ";
     if(globals.eInterest3 == document.data['i3'])
-      return true;
+      str += document.data['i3'] + ", ";
     if(globals.eInterest3 == document.data['i4'])
-      return true;
+      str += document.data['i4'] + ", ";
     if(globals.eInterest3 == document.data['i5'])
-      return true;
+      str += document.data['i5'] + ", ";
     if(globals.eInterest4 == document.data['i1'])
-      return true;
+      str += document.data['i1'] + ", ";
     if(globals.eInterest4 == document.data['i2'])
-      return true;
+      str += document.data['i2'] + ", ";
     if(globals.eInterest4 == document.data['i3'])
-      return true;
+      str += document.data['i3'] + ", ";
     if(globals.eInterest4 == document.data['i4'])
-      return true;
+      str += document.data['i4'] + ", ";
     if(globals.eInterest4 == document.data['i5'])
-      return true;
+      str += document.data['i5'] + ", ";
     if(globals.eInterest5 == document.data['i1'])
-      return true;
+      str += document.data['i1'] + ", ";
     if(globals.eInterest5 == document.data['i2'])
-      return true;
+      str += document.data['i2'] + ", ";
     if(globals.eInterest5 == document.data['i3'])
-      return true;
+      str += document.data['i3'] + ", ";
     if(globals.eInterest5 == document.data['i4'])
-      return true;
+      str += document.data['i4'] + ", ";
     if(globals.eInterest5 == document.data['i5'])
-      return true;
-    return false;
+      str += document.data['i5'] + ", ";
+    return str;
   }
 
 
@@ -267,7 +268,8 @@ class FireMapState extends State<FireMap> {
       documentList.forEach((DocumentSnapshot document) {
         GeoPoint pos = document.data['position']['geopoint'];
         double distance = document.data['distance'];
-        if(similarInterest(document) == true) {
+        String interests;
+        if((interests = similarInterest(document)) != "") {
           _mark.add(Marker(
             //markerId: MarkerId(_lastMapPosition.toString()),
             markerId: MarkerId(
@@ -275,7 +277,7 @@ class FireMapState extends State<FireMap> {
             position: LatLng(pos.latitude, pos.longitude),
             infoWindow: InfoWindow(
               title: document.data['name'], //_lastMapPosition.longitude.toString(),
-              snippet: document.data['i1'], //_lastMapPosition.latitude.toString(),
+              snippet: interests, //document.data['i1'], //_lastMapPosition.latitude.toString(),
             ),
             icon: BitmapDescriptor.defaultMarkerWithHue(
                 BitmapDescriptor.hueViolet), //BitmapDescriptor.defaultMarker,
