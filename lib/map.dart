@@ -28,6 +28,8 @@ class FireMap extends StatefulWidget {
 
 
 
+
+
 class FireMapState extends State<FireMap> {
   //static String one = 'myID';
   //final Marker _marker = new Marker(markerId: one);
@@ -162,7 +164,59 @@ class FireMapState extends State<FireMap> {
 
   }*/
 
-
+  bool similarInterest(DocumentSnapshot document) {
+    if(globals.eInterest1 = document.data['i1'])
+      return true;
+    if(globals.eInterest1 = document.data['i2'])
+      return true;
+    if(globals.eInterest1 = document.data['i3'])
+      return true;
+    if(globals.eInterest1 = document.data['i4'])
+      return true;
+    if(globals.eInterest1 = document.data['i5'])
+      return true;
+    if(globals.eInterest2 = document.data['i1'])
+      return true;
+    if(globals.eInterest2 = document.data['i2'])
+      return true;
+    if(globals.eInterest2 = document.data['i3'])
+      return true;
+    if(globals.eInterest2 = document.data['i4'])
+      return true;
+    if(globals.eInterest2 = document.data['i5'])
+      return true;
+    if(globals.eInterest3 = document.data['i1'])
+      return true;
+    if(globals.eInterest3 = document.data['i2'])
+      return true;
+    if(globals.eInterest3 = document.data['i3'])
+      return true;
+    if(globals.eInterest3 = document.data['i4'])
+      return true;
+    if(globals.eInterest3 = document.data['i5'])
+      return true;
+    if(globals.eInterest4 = document.data['i1'])
+      return true;
+    if(globals.eInterest4 = document.data['i2'])
+      return true;
+    if(globals.eInterest4 = document.data['i3'])
+      return true;
+    if(globals.eInterest4 = document.data['i4'])
+      return true;
+    if(globals.eInterest4 = document.data['i5'])
+      return true;
+    if(globals.eInterest5 = document.data['i1'])
+      return true;
+    if(globals.eInterest5 = document.data['i2'])
+      return true;
+    if(globals.eInterest5 = document.data['i3'])
+      return true;
+    if(globals.eInterest5 = document.data['i4'])
+      return true;
+    if(globals.eInterest5 = document.data['i5'])
+      return true;
+    return false;
+  }
 
 
   // Stateful Data
