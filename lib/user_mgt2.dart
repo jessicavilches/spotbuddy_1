@@ -28,6 +28,7 @@ class _UserMgt extends State<UserMgt>  {
   String _interest4;
   String _interest5;
   String _city;
+  String _mode;
 
   FormType _formType = FormType.edit;
   crudMethods crudObj = new crudMethods();
@@ -134,7 +135,26 @@ List<Widget> buildInputs() {
         validator: (value) => value.isEmpty ? 'Interest can\'t be empty' : null,
         onSaved: (value) => _interest5 = value,
       ),
+      new DropdownButton<String>(
+          value: globals.currentItemSelected,
+          items: globals.UserModes.map((String dropDownStringItem) {
+            return new DropdownMenuItem<String>(
+            value: dropDownStringItem,
+            child: new Text(dropDownStringItem),
+            );
+          }).toList(),
+          onChanged: (String newValueSelected) {
+            _onDropDownItemSelected(newValueSelected);
+          },
+      ),
     ];
+  }
+
+  void _onDropDownItemSelected(String newValueSelected){
+    setState(() {
+      globals.currentItemSelected = newValueSelected;
+      this._mode = newValueSelected;
+    });
   }
 
   void addToDatabase() async {
@@ -149,6 +169,7 @@ List<Widget> buildInputs() {
         'interest3': this._interest3,
         'interest4': this._interest4,
         'interest5': this._interest5,
+        'buddy' : this._mode,
         'uid' : globals.get_userID()
       };
       print("updated successfully");
