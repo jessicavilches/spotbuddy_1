@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'crud.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 var theme_color = Colors.blue;
 var tab_color = Colors.blueGrey;
@@ -61,6 +62,8 @@ String get_userID()
 {
   return _userID;
 }
+
+final FirebaseAnalytics analytics = new FirebaseAnalytics();
 
 class getClipper extends CustomClipper<Path> {
   @override

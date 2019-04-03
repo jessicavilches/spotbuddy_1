@@ -4,16 +4,11 @@ import 'user_mgt2.dart';
 //import 'package:spotbuddy_1/globals.properties';
 import 'globals.dart' as globals;
 import 'home.dart';
-import 'package:logging/logging.dart';
+import 'package:firebase_analytics/observer.dart';
 
-void main() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((LogRecord rec){
-    print('hi');
-    print('${rec.level.name}: ${rec.time}: ${rec.message}');
-  });
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
+
+final FirebaseAnalyticsObserver observer = new FirebaseAnalyticsObserver(analytics: globals.analytics);
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -29,6 +24,9 @@ class MyApp extends StatelessWidget {
         //home: new HomePage(),
         //home: new FindBuddy(),
         home: new LoginPage(),
+        navigatorObservers: [
+          observer,
+        ],
         routes: <String, WidgetBuilder> {
           '/homepage': (BuildContext context) => new HomePage(),
           '/login': (BuildContext context) => new LoginPage(),
