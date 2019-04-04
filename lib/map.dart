@@ -10,8 +10,6 @@ import 'dart:async';
 
 void main() => runApp(Map());
 
-final FirebaseAnalyticsObserver observer = new FirebaseAnalyticsObserver(analytics: globals.analytics);
-
 class Map extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,9 +17,6 @@ class Map extends StatelessWidget {
         home: Scaffold(
             body: FireMap()
         ),
-        navigatorObservers: [
-          observer,
-        ],
     );
   }
 }
