@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'globals.dart' as globals;
 import 'crud.dart';
 import 'dart:async';
+import 'email.dart';
 
 class Feed extends StatefulWidget{
   @override
@@ -44,6 +45,7 @@ class _ListPageState extends State<ListPage> {
   navigateToDetail(DocumentSnapshot ride){
     Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(ride: ride,)));
   }
+
 
   @override
   initState() {
@@ -120,6 +122,7 @@ class _DetailPageState extends State<DetailPage>{
 
   @override
   Widget build(BuildContext context){
+    //sendEmail sendemail = new sendEmail();
     return Scaffold (
       appBar: AppBar(
         title: Text((widget.ride.data["name"])),
@@ -140,7 +143,7 @@ class _DetailPageState extends State<DetailPage>{
                     children: <Widget>[
                       FlatButton(
                         child: const Text('Reach out!'),
-                        onPressed: () => Navigator.of(context).pushReplacementNamed('/map')
+                        onPressed: () => Navigator.of(context).pushReplacementNamed('/email'),
                         ///onPressed: () => addToDatabase(),
                         //this should email the person
                       ),
@@ -153,22 +156,7 @@ class _DetailPageState extends State<DetailPage>{
       ),
     );
   }
-  void addToDatabase() async {
-    //if(validateAndSave()) {
-    Map <String, dynamic> rideCatalog = {
-      'date': widget.ride.data["date"],
-      'start_time': widget.ride.data["start_time"],
-      'end_time': widget.ride.data["end_time"],
-      'start_address': widget.ride.data["start_address"],
-      'end_address': widget.ride.data["end_address"],
-      'rider_id' : globals.get_userID(),
-      'driver_id' : widget.ride.data["uid"],
-      'status' : "Pending",
-    };
-    //}
-    // moveToLogin(); This should clear all values and let you submit a new ride
-    //}
-  }
+
 
 
 }

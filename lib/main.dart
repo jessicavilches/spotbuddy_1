@@ -4,6 +4,9 @@ import 'user_mgt2.dart';
 //import 'package:spotbuddy_1/globals.properties';
 import 'globals.dart' as globals;
 import 'home.dart';
+import 'email.dart';
+import 'send_email.dart' as send;
+import 'feed.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,6 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    //send.send1();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -24,6 +28,8 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder> {
           '/homepage': (BuildContext context) => new HomePage(),
           '/login': (BuildContext context) => new LoginPage(),
+          '/email': (BuildContext context) => new sendEmail(),
+          '/feed': (BuildContext context) => new Feed(),
         }
     );
   }
