@@ -4,7 +4,6 @@ import 'user_mgt2.dart';
 //import 'package:spotbuddy_1/globals.properties';
 import 'globals.dart' as globals;
 import 'home.dart';
-import 'email.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,11 +21,9 @@ class MyApp extends StatelessWidget {
         //home: new HomePage(),
         //home: new FindBuddy(),
         home: new LoginPage(),
-        //home: new sendEmail(),
         routes: <String, WidgetBuilder> {
           '/homepage': (BuildContext context) => new HomePage(),
           '/login': (BuildContext context) => new LoginPage(),
-          '/map' : (BuildContext context) => new sendEmail(),
         }
     );
   }

@@ -4,11 +4,13 @@ import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'globals.dart' as globals;
-
+import 'package:firebase_analytics/observer.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
 void main() => runApp(Map());
+
+final FirebaseAnalyticsObserver observer = new FirebaseAnalyticsObserver(analytics: globals.analytics);
 
 class Map extends StatelessWidget {
   @override
@@ -16,7 +18,10 @@ class Map extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
             body: FireMap()
-        )
+        ),
+        navigatorObservers: [
+          observer,
+        ],
     );
   }
 }
@@ -41,7 +46,6 @@ class FireMapState extends State<FireMap> {
   //Map<MarkerId, Marker> markers = <MarkerId, Marker> {};
 
   GoogleMapController mapController;
-
 
   MarkerId selectedMarker;
 
@@ -116,6 +120,7 @@ class FireMapState extends State<FireMap> {
     await globals.getCity();
     await globals.getName();
     var pos = await location.getLocation();
+
     print(pos.longitude);
     print('\n');
     print(pos.latitude);
