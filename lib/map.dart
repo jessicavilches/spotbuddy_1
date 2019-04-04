@@ -45,7 +45,7 @@ class FireMapState extends State<FireMap> {
 
   MarkerId selectedMarker;
 
-  LatLng _lastMapPosition = LatLng(24.150, -110.32);
+  LatLng _lastMapPosition = LatLng(25.7617, -80.1918);
   Location location = new Location();
   Firestore firestore = Firestore.instance;
   Geoflutterfire geo = Geoflutterfire();
@@ -63,12 +63,12 @@ class FireMapState extends State<FireMap> {
     return Stack(
         children: [
           GoogleMap(
-            initialCameraPosition: CameraPosition(target: LatLng(24.150, -110.32), zoom: 10),
+            initialCameraPosition: CameraPosition(target: LatLng(25.7617, -80.1918), zoom: 10),
             onMapCreated: _onMapCreated,
             myLocationEnabled: true, // Add little blue dot for device location, requires permission from user
             mapType: MapType.normal,
             onCameraMove: _onCameraMove,
-            markers: _markers,
+            markers: _mark,
             //markers: _mark,
 //              trackCameraPosition: true
           ),
@@ -92,7 +92,7 @@ class FireMapState extends State<FireMap> {
                 onPressed: () => _onAddMarkerButtonPressed(),
               )
           ),
-          Positioned(
+         /* Positioned(
             bottom: 100,
             right: 5,
             child:
@@ -101,7 +101,7 @@ class FireMapState extends State<FireMap> {
               color: Colors.orange,
               onPressed: () => _startQuery(),
             )
-          )
+          )*/
         ]
     );
   }
@@ -265,11 +265,16 @@ class FireMapState extends State<FireMap> {
     });*/
     //_mark.clear();
     setState(() {
+      int i = 0; /////new line for matching users
       documentList.forEach((DocumentSnapshot document) {
         GeoPoint pos = document.data['position']['geopoint'];
         double distance = document.data['distance'];
         String interests;
         if((interests = similarInterest(document)) != "") {
+          globals.matchingUsers.insert(i, document); /////new line for matching users
+          print("name of the one i just inserted:");
+          print(globals.matchingUsers.elementAt(i).data["name"]);
+          i++; /////new line for matching users
           _mark.add(Marker(
             //markerId: MarkerId(_lastMapPosition.toString()),
             markerId: MarkerId(

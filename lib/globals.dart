@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'crud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 var theme_color = Colors.blue;
 var tab_color = Colors.blueGrey;
@@ -7,6 +8,8 @@ var profile_scale = 10;
 var screen_width = 400.0;
 var background_blue = Colors.lightBlue.withOpacity(0.2);
 var box_border = Colors.blueAccent;
+
+List<DocumentSnapshot> matchingUsers = new List(); /////new line for matching users
 
 var UserModes = ['Be a Buddy', 'Not be a buddy'];
 var currentItemSelected = UserModes[0];

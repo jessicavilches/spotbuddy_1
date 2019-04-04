@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'auth.dart';
-import 'find_buddy.dart';
 import 'user_mgt2.dart';
 import 'login_page.dart';
-//import 'feed.dart';
+import 'feed.dart';
 import 'map.dart';
 import 'crud.dart';
 import 'globals.dart' as globals;
@@ -23,6 +22,7 @@ class _HomePageState extends State<HomePage>{
   UserMgt usermgt;
   LoginPage login;
   Map map;
+  Feed feed;
 
 
   List<Widget> pages;
@@ -34,12 +34,13 @@ class _HomePageState extends State<HomePage>{
     //findBuddy = FindBuddy();
     usermgt = UserMgt();
     login = LoginPage();
+    feed = Feed();
 
     map = Map();
     currentPage = usermgt;
     currentTab = 0;
    // pages = [usermgt, findBuddy];
-    pages = [usermgt, map];
+    pages = [usermgt, feed, map];
 
     super.initState();
   }
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage>{
     setState(() {
       //currentPage = findBuddy;
       currentPage = map;
-      currentTab = 1;
+      currentTab = 2;
     });
 
   }
@@ -75,7 +76,13 @@ class _HomePageState extends State<HomePage>{
       currentPage = login;
       //currentTab = 0;
     });
+  }
 
+  void moveToFeed() {
+    setState(() {
+      currentPage = feed;
+      currentTab = 1;
+    });
   }
 
   void _signOut() async
@@ -128,9 +135,9 @@ class _HomePageState extends State<HomePage>{
             icon: new IconButton(
                 icon: new Icon(Icons.chat),
                 iconSize: 40,
-                onPressed: null
+                onPressed: moveToFeed,
             ),
-            title: Text('Inbox'),
+            title: Text('Feed'),
           ),
 
           BottomNavigationBarItem(
