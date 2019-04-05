@@ -4,6 +4,7 @@ import 'globals.dart' as globals;
 import 'crud.dart';
 import 'dart:async';
 import 'email.dart';
+import 'home.dart';
 
 class Feed extends StatefulWidget{
   @override
@@ -36,7 +37,10 @@ class _ListPageState extends State<ListPage> {
   Future getPosts() async {
     print("name of element at 0");
     await print(globals.matchingUsers.elementAt(0).data["name"]);
+    if (globals.matchingUsers.isNotEmpty)
     return globals.matchingUsers.cast<dynamic>();
+    else
+      "no data";
    // var firestore = Firestore.instance;
    // QuerySnapshot qn = await firestore.collection('Rides').getDocuments(); // move to crud
    // return qn.documents;
@@ -58,6 +62,7 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (globals.matchingUsers.isNotEmpty){
     return Container(
       child: FutureBuilder(
           future: _data,
@@ -96,6 +101,19 @@ class _ListPageState extends State<ListPage> {
                   });
             }
           }),
+    );
+  }
+  else return Container(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Text ("Use Find Buddy First", textAlign: TextAlign.center, textScaleFactor: 3),
+          new RaisedButton(
+            child: new Text('Take Me There', style: new TextStyle(fontSize: 20.0)),
+            onPressed: () => Navigator.of(context).pushReplacementNamed('/map'),
+          ),
+        ],
+      )
     );
   }
 }

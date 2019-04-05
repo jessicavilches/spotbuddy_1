@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           '/login': (BuildContext context) => new LoginPage(),
           '/email': (BuildContext context) => new sendEmail(),
           '/feed': (BuildContext context) => new Feed(),
+          //'/map': (BuildContext context) => new Map(),
         }
     );
   }

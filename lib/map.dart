@@ -72,21 +72,36 @@ class FireMapState extends State<FireMap> {
 //              trackCameraPosition: true
           ),
           Positioned(
-              bottom: 50,
+              bottom: 78,
+              height: 60,
               right: 5,
               child:
               FlatButton(
-                child: Icon(Icons.pin_drop),
+                child: Column(
+                  children: <Widget> [
+                    Icon(Icons.pin_drop),
+                    Text("Go To"),
+                    Text("Your Location")
+                  ],
+                ),
                 color: Colors.green,
+                //child: Text("location"),
                 onPressed: () => _animateToUser(),
               )
           ),
           Positioned(
-              bottom:10,
+              bottom:8,
+              height:60,
               right:5,
               child:
               FlatButton(
-                child: Icon(Icons.pin_drop),
+                child: Column(
+                  children: <Widget> [
+                    Icon(Icons.pin_drop),
+                    Text("Find"),
+                    Text("    Matches    ")
+                  ],
+                ),
                 color: Colors.purple,
                 onPressed: () => _onAddMarkerButtonPressed(),
               )

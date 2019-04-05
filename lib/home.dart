@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage>{
     setState(() {
       //currentPage = findBuddy;
       currentPage = map;
-      currentTab = 2;
+      currentTab = 1;
     });
 
   }
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage>{
   void moveToFeed() {
     setState(() {
       currentPage = feed;
-      currentTab = 1;
+      currentTab = 2;
     });
   }
 
@@ -131,6 +131,16 @@ class _HomePageState extends State<HomePage>{
             ),
             title: Text('Profile'),
           ),
+
+          BottomNavigationBarItem(
+            icon: new IconButton(
+              icon: new Icon(Icons.accessibility_new),
+              iconSize: 40,
+              onPressed: moveToFindBuddy,
+            ),
+            title: Text('Find Buddy'),
+          ),
+
           BottomNavigationBarItem(
             icon: new IconButton(
                 icon: new Icon(Icons.chat),
@@ -140,22 +150,15 @@ class _HomePageState extends State<HomePage>{
             title: Text('Feed'),
           ),
 
-          BottomNavigationBarItem(
-            icon: new IconButton(
-                icon: new Icon(Icons.accessibility_new),
-                iconSize: 40,
-                onPressed: moveToFindBuddy,
-            ),
-            title: Text('Find Buddy'),
-          ),
-          BottomNavigationBarItem(
+
+          /*BottomNavigationBarItem(
             icon: new IconButton(
                 icon: new Icon(Icons.directions_car),
                 iconSize: 40,
                 onPressed: null
             ),
             title: Text('Ride History'),
-          ),
+          ),*/
         ],
         type: BottomNavigationBarType.fixed,
         fixedColor: Colors.pink,
