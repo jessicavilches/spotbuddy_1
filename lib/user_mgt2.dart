@@ -29,6 +29,7 @@ class _UserMgt extends State<UserMgt>  {
   String _interest5;
   String _city;
   String _mode;
+  String _email;
 
   FormType _formType = FormType.edit;
   crudMethods crudObj = new crudMethods();
@@ -106,6 +107,12 @@ List<Widget> buildInputs() {
         onSaved: (value) => _city = value,
       ),
       new TextFormField(
+        initialValue: globals.email,
+        decoration: new InputDecoration(labelText: 'Email Address'),
+        validator: (value) => value.isEmpty ? 'Email address can\'t be empty' : null,
+        onSaved: (value) => _email = value,
+      ),
+      new TextFormField(
         initialValue: globals.eInterest1,
         decoration: new InputDecoration(labelText: 'Interest 1'),
         validator: (value) => value.isEmpty ? 'Interest can\'t be empty' : null,
@@ -164,6 +171,7 @@ List<Widget> buildInputs() {
         'fullName': this._fullName,
         'city': this._city,
         'age': this._age,
+        'email': this._email,
         'interest1': this._interest1,
         'interest2': this._interest2,
         'interest3': this._interest3,

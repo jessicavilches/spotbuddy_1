@@ -50,6 +50,11 @@ class _ListPageState extends State<ListPage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(ride: ride,)));
   }
 
+  navigateToFindBuddy() {
+    HomePage hp = new HomePage();
+    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+
+  }
 
   @override
   initState() {
@@ -141,6 +146,8 @@ class _DetailPageState extends State<DetailPage>{
   @override
   Widget build(BuildContext context){
     //sendEmail sendemail = new sendEmail();
+    globals.matchEmail = widget.ride.data["email"];
+
     return Scaffold (
       appBar: AppBar(
         title: Text((widget.ride.data["name"])),

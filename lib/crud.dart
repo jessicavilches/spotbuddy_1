@@ -29,6 +29,11 @@ class crudMethods {
     globals.eName = document.data['fullName'];
   }
 
+  Future<void> getEmail(String uId) async {
+    DocumentSnapshot document = await Firestore.instance.collection("Users").document(uId).get();
+    globals.eName = document.data['email'];
+  }
+
   Future<void> getCity(String uId) async {
     DocumentSnapshot document = await Firestore.instance.collection("Users").document(uId).get();
     globals.eCity = document.data['city'];

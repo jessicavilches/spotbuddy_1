@@ -64,6 +64,7 @@ class _HomePageState extends State<HomePage>{
     await globals.getAge();
     await globals.getCity();
     await globals.getName();
+    await globals.getEmail();
     setState(() {
       currentPage = usermgt;
       currentTab = 0;

@@ -9,6 +9,9 @@ var screen_width = 400.0;
 var background_blue = Colors.lightBlue.withOpacity(0.2);
 var box_border = Colors.blueAccent;
 
+String userEmail = '';
+String matchEmail = '';
+
 List<DocumentSnapshot> matchingUsers = new List(); /////new line for matching users
 
 var UserModes = ['Be a Buddy', 'Not be a buddy'];
@@ -22,6 +25,7 @@ String eInterest2 = "";
 String eInterest3 = "";
 String eInterest4 = "";
 String eInterest5 = "";
+String email = "";
 
 bool registeredSuccessfully;
 bool loggedSuccessfully;
@@ -32,6 +36,11 @@ crudMethods crudObj = new crudMethods();
 void getAge() async {
   await crudObj.getAge(get_userID());
 }
+
+void getEmail() async {
+  await crudObj.getEmail(get_userID());
+}
+
 void getCity() async {
   await crudObj.getCity(get_userID());
 }

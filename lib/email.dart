@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'home.dart' as home;
+import 'globals.dart' as globals;
 
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -14,8 +15,16 @@ class sendEmail extends StatefulWidget {
 
 class _sendEmail extends State<sendEmail> {
 
+  final _userEmail = TextEditingController(
+    text: globals.email,
+  );
+
+  final _userPassword = TextEditingController(
+    text: '',
+  );
+
   final _recipientController = TextEditingController(
-    text: 'jessicavilches7@gmail.com',
+    text: globals.matchEmail,
   );
 
   final _subjectController = TextEditingController(text: 'The subject');
@@ -65,6 +74,27 @@ class _sendEmail extends State<sendEmail> {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: TextField(
+                      controller: _userEmail,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Your Email',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: _userPassword,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Your Password',
+                      ),
+                      obscureText: true,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextField(
                       controller: _recipientController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -102,9 +132,9 @@ class _sendEmail extends State<sendEmail> {
 
 
   send_email() async {
-    String username = 'jessicavilches7@gmail.com';
-    String password = '';
-    final smtpServer = gmail(username, password);
+    //String username = 'jessicavilches7@gmail.com';
+    //String password = '';
+    final smtpServer = gmail(_userEmail.text, _userPassword.text);
     // Use the SmtpServer class to configure an SMTP server:
     // final smtpServer = new SmtpServer('smtp.domain.com');
     // See the named arguments of SmtpServer for further configuration
@@ -112,7 +142,7 @@ class _sendEmail extends State<sendEmail> {
 
     // Create our message.
     final message = new Message()
-      ..from = new Address(username, 'Your name')
+      ..from = new Address(_userEmail.text, 'Your name')
       ..recipients.add(_recipientController.text)
     //..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
     //..bccRecipients.add(new Address('bccAddress@example.com'))
@@ -142,7 +172,7 @@ class _sendEmail extends State<sendEmail> {
     // `new Address('destination@example.com')` is equivalent to
     // adding the mail address as `String`.
     final equivalentMessage = new Message()
-      ..from = new Address(username, 'Your name')
+      ..from = new Address(_userEmail.text, 'Your name')
       ..recipients.add(_recipientController.toString())
      // ..ccRecipients.addAll([new Address('destCc1@example.com'), 'destCc2@example.com'])
       //..bccRecipients.add('bccAddress@example.com')

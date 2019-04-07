@@ -155,6 +155,7 @@ class FireMapState extends State<FireMap> {
       'i3' : globals.eInterest3,
       'i4' : globals.eInterest4,
       'i5' : globals.eInterest5,
+      'email' : globals.email,
     });
   }
 

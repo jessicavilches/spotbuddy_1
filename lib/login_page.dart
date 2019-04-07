@@ -61,6 +61,9 @@ class _LoginPageState extends State<LoginPage> {
     await crudObj.getInterest5(globals.get_userID());
   }
 
+  void getEmail() async {
+    await crudObj.getEmail(globals.get_userID());
+  }
 
   void validateAndSubmit() async {
     if (validateAndSave()) {
@@ -68,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
         if (_formType == FormType.login) {
           FirebaseUser user = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: _email, password: _password);
+          globals.email = _email;
           print('Signed in: ${user.uid}');
           globals.loggedSuccessfully = true;
           globals.set_userID(user.uid);
@@ -79,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
           await getInterest3();
           await getInterest4();
           await getInterest5();
+          //await getEmail();
           print("At log in, the age is: ");
           print(globals.eAge);
           //Navigator.of(context).pop();
