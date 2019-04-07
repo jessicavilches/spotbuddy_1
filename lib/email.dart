@@ -181,6 +181,8 @@ class _sendEmail extends State<sendEmail> {
       //..html = "<h1>Test</h1>\n<p>Hey! Here's some HTML content</p>";
 
     final sendReports2 = await send(equivalentMessage, smtpServer);
+
+    Navigator.pop(context);
   }
 
 }
