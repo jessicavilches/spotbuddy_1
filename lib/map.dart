@@ -7,6 +7,7 @@ import 'globals.dart' as globals;
 import 'package:firebase_analytics/observer.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
+import 'globals.dart' as globals;
 
 void main() => runApp(Map());
 
@@ -156,10 +157,13 @@ class FireMapState extends State<FireMap> {
       'i4' : globals.eInterest4,
       'i5' : globals.eInterest5,
       'email' : globals.email,
+      'city' : globals.eCity,
+      'age' : globals.eAge,
     });
   }
 
   void _onAddMarkerButtonPressed() {
+    globals.matchingUsers.clear();
     //_markers.clear();
     setState(() {
       _markers.add(Marker(
@@ -286,7 +290,12 @@ class FireMapState extends State<FireMap> {
         GeoPoint pos = document.data['position']['geopoint'];
         double distance = document.data['distance'];
         String interests;
-        if((interests = similarInterest(document)) != "") {
+        print("document ID:");
+        print(document.documentID);
+        print("user ID:");
+        print(globals.get_userID());
+
+        if(  ((interests = similarInterest(document)) != "") && (document.documentID != globals.get_userID()))  {
           globals.matchingUsers.insert(i, document); /////new line for matching users
           print("name of the one i just inserted:");
           print(globals.matchingUsers.elementAt(i).data["name"]);

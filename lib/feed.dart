@@ -158,6 +158,8 @@ class _DetailPageState extends State<DetailPage>{
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text('\nName: '+ (widget.ride.data["name"]) + '\n'),
+                Text('City: ' + widget.ride.data["city"]),
+                Text('Age: ' + widget.ride.data["age"]),
                 Text('Interest 1: ' + widget.ride.data["i1"]),
                 Text('Interest 2: '+ widget.ride.data["i2"]),
                 Text('Interest 3: ' + (widget.ride.data["i3"])),
