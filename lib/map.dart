@@ -8,6 +8,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 import 'globals.dart' as globals;
+import 'feed.dart';
 
 void main() => runApp(Map());
 
@@ -36,12 +37,13 @@ class FireMapState extends State<FireMap> {
   //final Marker _marker = new Marker(markerId: one);
 
 
-
+  MapType _currentMapType = MapType.normal;
 
 
   //Map<MarkerId, Marker> markers = <MarkerId, Marker> {};
 
   GoogleMapController mapController;
+  //Completer<GoogleMapController> _controller = Completer();
 
   MarkerId selectedMarker;
 
@@ -59,6 +61,15 @@ class FireMapState extends State<FireMap> {
     _lastMapPosition = position.target;
   }
 
+  /*void _onMapTypeButtonPressed() {
+    setState(() {
+      _currentMapType = _currentMapType == MapType.normal
+          ? MapType.satellite
+          : MapType.normal;
+    });
+  }*/
+
+
   build(context) {
     return Stack(
         children: [
@@ -72,7 +83,7 @@ class FireMapState extends State<FireMap> {
             //markers: _mark,
 //              trackCameraPosition: true
           ),
-          Positioned(
+          /*Positioned(
               bottom: 78,
               height: 60,
               right: 5,
@@ -106,18 +117,64 @@ class FireMapState extends State<FireMap> {
                 color: Colors.purple,
                 onPressed: () => _onAddMarkerButtonPressed(),
               )
+          ),*/
+          Padding(
+            //bottom: 100,
+            //right: 5,
+            padding: const EdgeInsets.all(16.0),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: new FloatingActionButton(
+                  onPressed: () => _animateToUser(),
+                  child: new Icon(
+                    Icons.edit_location,
+                    color: Colors.white,
+                  ),
+                  tooltip: "Your Location",
+              ),
+            //FlatButton(
+            //  child: Icon(Icons.pin_drop),
+            //  color: Colors.orange,
+            //  onPressed: () => _startQuery(),
+            //)
           ),
-         /* Positioned(
-            bottom: 100,
-            right: 5,
-            child:
-            FlatButton(
-              child: Icon(Icons.pin_drop),
-              color: Colors.orange,
-              onPressed: () => _startQuery(),
-            )
-          )*/
-        ]
+          ),
+          Padding(
+            //bottom: 100,
+            //right: 5,
+            padding: const EdgeInsets.all(16.0),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: new FloatingActionButton(
+                onPressed: () => _onAddMarkerButtonPressed(),
+                child: new Icon(
+                  Icons.accessibility_new,
+                  color: Colors.white,
+                ),
+                tooltip: "Your Matches",
+              ),
+              //FlatButton(
+              //  child: Icon(Icons.pin_drop),
+              //  color: Colors.orange,
+              //  onPressed: () => _startQuery(),
+              //)
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: new FloatingActionButton(
+                onPressed: () => Navigator.of(context).pushReplacementNamed('/email'),
+                child: new Icon(
+                  Icons.email,
+                  color: Colors.white,
+                ),
+                tooltip: "Reach Out",
+              ),
+            ),
+          ),
+        ],
     );
   }
 
@@ -248,6 +305,27 @@ class FireMapState extends State<FireMap> {
   }
 
 
+  /*void _onMarkerTapped(MarkerId markerId) {
+    final Marker tappedMarker = markers[markerId];
+    if (tappedMarker != null) {
+      setState(() {
+        if (markers.containsKey(selectedMarker)) {
+          final Marker resetOld = markers[selectedMarker]
+              .copyWith(iconParam: BitmapDescriptor.defaultMarker);
+          markers[selectedMarker] = resetOld;
+        }
+        selectedMarker = markerId;
+        final Marker newMarker = tappedMarker.copyWith(
+          iconParam: BitmapDescriptor.defaultMarkerWithHue(
+            BitmapDescriptor.hueGreen,
+          ),
+        );
+        markers[markerId] = newMarker;
+      });
+    }
+  }*/
+
+
   // Stateful Data
   BehaviorSubject<double> radius = BehaviorSubject(seedValue: 30.0);//seedValue: 100.0);
   Stream<dynamic> query;
@@ -308,6 +386,9 @@ class FireMapState extends State<FireMap> {
             infoWindow: InfoWindow(
               title: document.data['name'], //_lastMapPosition.longitude.toString(),
               snippet: interests, //document.data['i1'], //_lastMapPosition.latitude.toString(),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(ride: document)));
+              },//() => Navigator.of(context).pushReplacementNamed('/email'),
             ),
             icon: BitmapDescriptor.defaultMarkerWithHue(
                 BitmapDescriptor.hueViolet), //BitmapDescriptor.defaultMarker,
@@ -321,6 +402,7 @@ class FireMapState extends State<FireMap> {
     });
 
   }
+
 
   _startQuery() async {
     // Get users location
@@ -357,6 +439,7 @@ class FireMapState extends State<FireMap> {
   void _onMapCreated(GoogleMapController controller) {
     setState(() {
       mapController = controller;
+      //_controller.complete(controller);
     });
     _updateQuery(25.0);
   }

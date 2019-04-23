@@ -3,6 +3,9 @@ import 'globals.dart' as globals;
 import 'find_buddy.dart';
 import 'crud.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 void main() => runApp(new UserMgt());
 
@@ -19,6 +22,35 @@ enum FormType {
 }
 
 class _UserMgt extends State<UserMgt>  {
+  /*File newProfilePic;
+
+  Future getImage() async{
+    var tempImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState((){
+      newProfilePic = tempImage;
+    });
+  }
+
+  uploadImage(){
+    var randomno = Random(25);
+    final StorageReference firebaseStorageRef = firebaseStorage.instance
+        .ref()
+        .child('profilepics/${random.nextInt(5000).toString()}.jpg');
+    StorageUploadTask task = firebaseStorageRef.putFile(newProfilePic);
+
+    task.future.then((value){
+
+    })*/
+  /*File newProfilePic;
+  Future getImage() async{
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(){
+      newProfilePic = image;
+    }
+  }*/
+
+
   final formKey = new GlobalKey<FormState>();
   String _fullName;
   String _age;
@@ -47,7 +79,9 @@ class _UserMgt extends State<UserMgt>  {
       appBar: AppBar(
         title: Text('User Profile'),
       ),
-      body: Container(
+
+      //body: new SingleChildScrollView(
+      body: new Container(
         padding: EdgeInsets.all(16.0),
         child: new Form(
           key: formKey,
@@ -63,7 +97,7 @@ class _UserMgt extends State<UserMgt>  {
   List <Widget> buildSubmitButtons() {
     return [
       new RaisedButton(
-        child: new Text('Save', style: new TextStyle(fontSize: 20.0)),
+        child: new Text('Save', style: new TextStyle(fontSize: 20.0),),
          onPressed: validateAndSubmit,
       ),
     ];
@@ -88,6 +122,8 @@ List<Widget> buildInputs() {
     final _myPassController = TextEditingController();
     //this._mode = globals.currentItemSelected;
     return [
+      //new CircleAvatar(backgroundColor: Colors.green, child: Text("J")),//(widget.ride.data["name"])),
+      //newProfilePic == null ? getChooseButton() : getUploadButton();
       new TextFormField(
           initialValue: globals.eName,
         decoration: new InputDecoration(labelText: 'Full Name'),
@@ -186,7 +222,36 @@ List<Widget> buildInputs() {
       });
     }
   }
+/*
+  updateProfilePic(picUrl){
+    var userInfo = new UserUpdateInfo();
+    userInfo.photoUrl = picUrl;
 
+    FirebaseAuth.instance.updateProfile(userInfo).then((val){
+      FirebaseAuth.instance.currentUser().then((user){
+        Firestore.instance
+            .collection('/users')
+            .where('uid', isEqualTo: user.uid)
+            .getDocuments()
+            .then((docs){
+          Firestore.instance
+              .document('users/${docs.documents[0].documentID}')
+              .updateData({'photoUrl': picUrl}).then((val) {
+            print('updated');
+          }).catchError((e){
+            print(e);
+          });
+        }).catchError((e) {
+          print(e);
+        });
+      }).catchError((e) {
+        print(e);
+      });
+    }).catchError((e) {
+    print(e);
+    });
+  }
+*/
 }
 
 

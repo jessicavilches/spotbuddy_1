@@ -24,6 +24,8 @@ dependencies:
   #flutter_email_sender: ^1.1.0
   mailer: ^2.3.0
   #geolocator: '^3.0.1'
+  image_picker: #0.5.3+1
+  firebase_storage:
 
 
 

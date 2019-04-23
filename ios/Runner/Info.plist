@@ -11,6 +11,12 @@
     <string>Needed to access location</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>Needed to access location</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Needed to access photos</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Needed to access camera</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Needed to access microphone</string>
 
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
