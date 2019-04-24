@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'crud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 var theme_color = Colors.blue;
 var tab_color = Colors.blueGrey;
@@ -32,6 +33,8 @@ bool loggedSuccessfully;
 String _userID = "";
 
 crudMethods crudObj = new crudMethods();
+
+final FirebaseAnalytics analytics = new FirebaseAnalytics();
 
 void getAge() async {
   await crudObj.getAge(get_userID());

@@ -7,8 +7,11 @@ import 'home.dart';
 import 'email.dart';
 import 'send_email.dart' as send;
 import 'feed.dart';
+import 'package:firebase_analytics/observer.dart';
 
 void main() => runApp(MyApp());
+
+final FirebaseAnalyticsObserver observer = new FirebaseAnalyticsObserver(analytics: globals.analytics);
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
         //home: new HomePage(),
         //home: new FindBuddy(),
         home: new LoginPage(),
+        navigatorObservers: <NavigatorObserver>[observer],
         routes: <String, WidgetBuilder> {
           '/homepage': (BuildContext context) => new HomePage(),
           '/login': (BuildContext context) => new LoginPage(),

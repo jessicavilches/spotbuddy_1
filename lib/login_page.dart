@@ -4,6 +4,7 @@ import 'globals.dart' as globals;
 import 'user_data.dart';
 import 'auth.dart';
 import 'crud.dart';
+import 'package:firebase_analytics/observer.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({this.auth, this.onSignedIn});
