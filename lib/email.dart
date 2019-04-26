@@ -92,7 +92,7 @@ class _sendEmail extends State<sendEmail> {
                       obscureText: true,
                     ),
                   ),
-                  Padding(
+                  /*Padding(
                     padding: EdgeInsets.all(8.0),
                     child: TextField(
                       controller: _recipientController,
@@ -101,7 +101,7 @@ class _sendEmail extends State<sendEmail> {
                         labelText: 'Recipient',
                       ),
                     ),
-                  ),
+                  ),*/
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: TextField(

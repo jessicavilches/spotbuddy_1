@@ -9,6 +9,7 @@ import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 import 'globals.dart' as globals;
 import 'feed.dart';
+import 'email.dart';
 
 void main() => runApp(Map());
 
@@ -160,12 +161,12 @@ class FireMapState extends State<FireMap> {
               //)
             ),
           ),
-          Padding(
+          /*Padding(
             padding: const EdgeInsets.all(16.0),
             child: Align(
               alignment: Alignment.topRight,
               child: new FloatingActionButton(
-                onPressed: () => Navigator.of(context).pushReplacementNamed('/email'),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Feed())),//() => Navigator.of(context).pushReplacementNamed('/email'),
                 child: new Icon(
                   Icons.email,
                   color: Colors.white,
@@ -173,7 +174,7 @@ class FireMapState extends State<FireMap> {
                 tooltip: "Reach Out",
               ),
             ),
-          ),
+          ),*/
         ],
     );
   }
@@ -386,9 +387,9 @@ class FireMapState extends State<FireMap> {
             infoWindow: InfoWindow(
               title: document.data['name'], //_lastMapPosition.longitude.toString(),
               snippet: interests, //document.data['i1'], //_lastMapPosition.latitude.toString(),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(ride: document)));
-              },//() => Navigator.of(context).pushReplacementNamed('/email'),
+              //onTap: () {
+              //  Navigator.push(context, MaterialPageRoute(builder: (context) => sendEmail()));//DetailPage(ride: document)));
+             // },//() => Navigator.of(context).pushReplacementNamed('/email'),
             ),
             icon: BitmapDescriptor.defaultMarkerWithHue(
                 BitmapDescriptor.hueViolet), //BitmapDescriptor.defaultMarker,

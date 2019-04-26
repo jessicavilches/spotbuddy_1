@@ -37,8 +37,8 @@ class _HomePageState extends State<HomePage>{
     feed = Feed();
 
     map = Map();
-    currentPage = usermgt;
-    currentTab = 0;
+    currentPage = map;
+    currentTab = 1;
    // pages = [usermgt, findBuddy];
     pages = [usermgt, feed, map];
 

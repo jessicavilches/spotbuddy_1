@@ -84,7 +84,7 @@ class _ListPageState extends State<ListPage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Text('\nName: '+ (snapshot.data[index].data["name"]) + '\n'),
+                          Text('\n'+ (snapshot.data[index].data["name"]) + '\n', textScaleFactor: 2,),  //Name: '
                           Text('Interest 1: ' + snapshot.data[index].data["i1"]),
                           Text('Interest 2: '+ snapshot.data[index].data["i2"]),
                           Text('Interest 3: ' + (snapshot.data[index].data["i3"])),
@@ -150,14 +150,14 @@ class _DetailPageState extends State<DetailPage>{
 
     return Scaffold (
       appBar: AppBar(
-        title: Text((widget.ride.data["name"])),
+        title: Text("Match"),//(widget.ride.data["name"])),
       ),
       body: Container(
         child: Card(
           child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('\nName: '+ (widget.ride.data["name"]) + '\n'),
+                Text('\n'+ (widget.ride.data["name"]) + '\n', textScaleFactor: 2,), //'\nName: '+
                 Text('City: ' + widget.ride.data["city"]),
                 Text('Age: ' + widget.ride.data["age"]),
                 Text('Interest 1: ' + widget.ride.data["i1"]),
