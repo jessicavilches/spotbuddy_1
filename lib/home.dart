@@ -5,7 +5,10 @@ import 'login_page.dart';
 import 'feed.dart';
 import 'map.dart';
 import 'crud.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'globals.dart' as globals;
+
+final FirebaseAnalyticsObserver observer = new FirebaseAnalyticsObserver(analytics: globals.analytics);
 
 class HomePage extends StatefulWidget{
   HomePage({this.auth, this.onSignedOut});
@@ -51,6 +54,7 @@ class _HomePageState extends State<HomePage>{
       //currentPage = findBuddy;
       currentPage = map;
       currentTab = 1;
+      sendCurrentTabToAnalytics("map");
     });
 
   }
@@ -68,6 +72,7 @@ class _HomePageState extends State<HomePage>{
     setState(() {
       currentPage = usermgt;
       currentTab = 0;
+      sendCurrentTabToAnalytics("usermgt");
     });
 
   }
@@ -76,6 +81,7 @@ class _HomePageState extends State<HomePage>{
     setState(() {
       currentPage = login;
       //currentTab = 0;
+      sendCurrentTabToAnalytics("login");
     });
   }
 
@@ -83,6 +89,7 @@ class _HomePageState extends State<HomePage>{
     setState(() {
       currentPage = feed;
       currentTab = 2;
+      sendCurrentTabToAnalytics("feed");
     });
   }
 
@@ -121,6 +128,7 @@ class _HomePageState extends State<HomePage>{
             //print(index);
             currentTab = index;
             currentPage = usermgt;
+            sendCurrentTabToAnalytics("usermgt");
           });
         },
         items: <BottomNavigationBarItem>[
@@ -166,4 +174,10 @@ class _HomePageState extends State<HomePage>{
       ),
     );
   }
+}
+
+void sendCurrentTabToAnalytics(name) {
+  observer.analytics.setCurrentScreen(
+    screenName: name,
+  );
 }
